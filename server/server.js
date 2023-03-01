@@ -59,7 +59,8 @@ app.get('/callback', async (req,res) => {
       const receivedTokens = await spotifyApi.authorizationCodeGrant(code);
       spotifyApi.setAccessToken(receivedTokens.body.access_token);
       spotifyApi.setRefreshToken(receivedTokens.body.refresh_token);
-      res.status(200).send(refAndAccTok.body.refresh_token);
+      console.log(receivedTokens)
+      res.status(200).send(receivedTokens.body.refresh_token);
     }
     catch(error){
       res.status(400).send(error)

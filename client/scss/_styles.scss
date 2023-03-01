@@ -1,0 +1,17 @@
+body{
+  background-color: $darkGray;
+}
+
+#login-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 80vh;
+  #login-title{
+    font-family: 'CircularSpotify';
+    font-size: 5rem;
+    color: white;
+  }
+}

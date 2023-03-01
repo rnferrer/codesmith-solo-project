@@ -1,12 +1,17 @@
-
+import React from "react";
 
 const Login = () => {
 
   return(
     <div>
-      <a href="/login">Log In</a>
+      <div id="login-container">
+        <h1 id="login-title">Welcome to Spotifriends</h1>
+        <button><a href="/login">Log In</a></button>
+        
+      </div>
+     
     </div>
   )
 }
 
-export default Login
+export default Login;
