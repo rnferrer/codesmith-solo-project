@@ -41,12 +41,11 @@ app.get('/login', (req, res) => {
   res.cookie(stateKey, state);
   //set scope to allow for reading user email, their library, and their state of playback
   let scope = ['user-read-private', 'user-read-email', 'user-library-read', 'user-read-playback-state'];
-
+  //creates an authorize url and redirects to it
   res.redirect(spotifyApi.createAuthorizeURL(scope, state))
 })
 
 app.get('/callback', async (req,res) => {
-
   let code = req.query.code || null;
   let state = req.query.state || null;
   let storedState = req.cookies ? req.cookies[stateKey] : null;
@@ -57,33 +56,13 @@ app.get('/callback', async (req,res) => {
   else{
     res.clearCookie(stateKey);
     try{
-      // const body = {
-      //   grant_type: 'authorization_code',
-      //   code,
-      //   redirect_uri
-      // }
-      // const headers = {
-      //   Authorization: 'Basic ' + (Buffer.from(client_id + ':' + client_secret).toString('base64')),
-      //   'Content-Type': 'application/x-www-form-urlencoded'
-      // }
-
-      // const response = await fetch('https://accounts.spotify.com/api/token', {
-      //   method: 'post',
-      //   body: querystring.stringify(body),
-      //   headers
-      // })
-
-      // const data = await response.json()
-      // const sendStuff = {
-      //   refresh_token: data.refresh_token,
-
-      // }
-      const refAndAccTok = await spotifyApi.authorizationCodeGrant(code);
+      const receivedTokens = await spotifyApi.authorizationCodeGrant(code);
+      spotifyApi.setAccessToken(receivedTokens.body.access_token);
+      spotifyApi.setRefreshToken(receivedTokens.body.refresh_token);
       res.status(200).send(refAndAccTok.body.refresh_token);
-
     }
     catch(error){
-
+      res.status(400).send(error)
     }
   }
 })
