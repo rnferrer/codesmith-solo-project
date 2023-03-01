@@ -17,9 +17,13 @@ module.exports = {
     },
     proxy: {
       //localhost:8080/api/leaders
-      '/*': {
-        target: 'http://localhost:3000/',
-        secure: false,
+      '/login': {
+        target: 'http://localhost:3000',
+        secure: true,
+      },
+      '/callback': {
+        target: 'http://localhost:3000',
+        secure: true,
       }
     }
   },
