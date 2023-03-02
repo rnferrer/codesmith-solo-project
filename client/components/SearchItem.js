@@ -4,7 +4,7 @@ const SearchItem = ({artist, song, uri}) => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    const enqueue = await fetch('/enqueue', {
+    const enqueue = await fetch('/api/enqueue', {
       method: "post",
       mode: "cors",
       headers: {

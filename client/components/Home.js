@@ -2,6 +2,7 @@ import React, {useState, useEffect}from "react";
 import Today from "./Date";
 import SearchBar from "./SearchBar";
 import SpotifyPlayer from 'react-spotify-web-playback';
+import Cookies from "js-cookie";
 
 
 const Home = () => {
@@ -11,12 +12,7 @@ const Home = () => {
   const [song, setSong] = useState('');
   
   useEffect(()=>{
-    fetch('/test')
-    .then(data => data.json())
-    .then(data => {
-      setToken(data.token); 
-      setSong(data.song);     
-    })
+    setToken(Cookies.get('token'))
   })
   return(
     <div>
@@ -26,7 +22,7 @@ const Home = () => {
       <div id="center-display-container">
         <Today/>
         <SearchBar/>
-        {/* <SpotifyPlayer token={token} song={song}/> */}
+        <SpotifyPlayer token={token}/>
       </div>
     </div>
   )

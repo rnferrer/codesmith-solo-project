@@ -29,11 +29,11 @@ module.exports = {
         target: 'http://localhost:3000',
         secure: true,
       },
-      '/search': {
+      '/api/*': {
         target: 'http://localhost:3000',
         secure: true
       },
-      '/enqueue': {
+      '/token': {
         target: 'http://localhost:3000',
         secure: true
       }

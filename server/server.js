@@ -77,9 +77,9 @@ app.get('/callback', async (req, res) => {
   let storedState = req.cookies ? req.cookies[stateKey] : null;
   console.log('in callback');
 
-  if (state === null || state !== storedState) {
-    res.status(400).send('error logging into Spotify')
-  }
+  //response we received from spotify/authorize is an error
+  if (state === null || state !== storedState) res.status(400).send('error logging into Spotify')
+  
   else{
     res.clearCookie(stateKey);
     try{
@@ -105,6 +105,10 @@ app.get('/refresh', async (req, res) => {
   }
 })
 
+app.get('/token', (req, res) => {
+  res.status(200).json(spotifyApi.getAccessToken());
+})
+
 app.get('/home', async (req, res) => {
   try{
     const user = await spotifyApi.getMe();
@@ -118,14 +122,38 @@ app.get('/home', async (req, res) => {
   }
 })
 
-app.post('/enqueue', async (req, res) => {
-  console.log(req.body.uri)
+app.post('/api/enqueue', async (req, res) => {
+
+  //get the player on the application
+  const getDevices = await spotifyApi.getMyDevices()
+  const devices = getDevices.body.devices
+  let WebPlayer
+
+  for (let item of devices){
+    if (item.name === 'Spotify Web Player'){
+      WebPlayer = item  
+      break;
+    }
+  }
+
+  //set react player as the active player
+  if(WebPlayer.is_active === false){
+    const newPlayback = await spotifyApi.transferMyPlayback([WebPlayer.id], {play: true})
+    //console.log(newPlayback)
+  }
+  const newSong = await spotifyApi.addToQueue(req.body.uri);
+  console.log(newSong)
+  res.status(200).json('hi')
+
 })
 
-app.post('/search', async(req, res) => {
+app.post('/api/search', async(req, res) => {
+  //search for inputted track and return first 7 results
   const searched = await spotifyApi.searchTracks(req.body.q);
-  const tracks = await searched.body.tracks.items.slice(0,7)
+  const tracks = searched.body.tracks.items.slice(0,7)
   const trackInfo = [];
+
+  //get only properties that we need
   for (let i=0; i<tracks.length; i++){
     const {artists, href, id, name, uri} = tracks[i];
     trackInfo.push({artists, href, id, name, uri})

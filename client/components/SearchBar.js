@@ -17,7 +17,7 @@ const SearchBar = () => {
     song = event.target.value
     
     if (song.replace(/\s/g, '').length === 0) return
-    const searchedSongs = await fetch('/search', {
+    const searchedSongs = await fetch('/api/search', {
       method: "post",
       mode: "cors",
       headers: {
@@ -30,8 +30,6 @@ const SearchBar = () => {
 
     const data = await searchedSongs.json();
     setSearchList(data)
-    //console.log(searchList);
-
 
     const items = searchList.map((song, i) => {
       return(
