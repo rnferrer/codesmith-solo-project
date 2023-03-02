@@ -71,7 +71,7 @@ app.get('/login', (req, res) => {
   return res.redirect(url)
 })
 
-app.get('/callback', async (req,res) => {
+app.get('/callback', async (req, res) => {
   let code = req.query.code || null;
   let state = req.query.state || null;
   let storedState = req.cookies ? req.cookies[stateKey] : null;
@@ -94,7 +94,18 @@ app.get('/callback', async (req,res) => {
   }
 })
 
-app.get('/home', async(req,res) => {
+app.get('/refresh', async (req, res) => {
+  try{
+    const newAccToken = await spotifyApi.refreshAccessToken()
+    spotifyApi.setAccessToken(newAccToken.body.access_token);
+    res.send(spotifyApi.getAccessToken());
+  }
+  catch (error){
+    res.status(400).send(error)
+  }
+})
+
+app.get('/home', async (req, res) => {
   try{
     const user = await spotifyApi.getMe();
 
@@ -107,12 +118,8 @@ app.get('/home', async(req,res) => {
   }
 })
 
-app.get('/test', (req, res)=>{
-  const resObj = {
-    token: spotifyApi.getAccessToken(),
-    song: '4iV5W9uYEdYUVa79Axb7Rh'
-  }
-  res.json(resObj)
+app.post('/enqueue', async (req, res) => {
+  console.log(req.body.uri)
 })
 
 app.post('/search', async(req, res) => {
@@ -127,16 +134,6 @@ app.post('/search', async(req, res) => {
   res.status(200).json(trackInfo)
 })
 
-app.get('/refresh', async (req, res) => {
-  try{
-    const newAccToken = await spotifyApi.refreshAccessToken()
-    spotifyApi.setAccessToken(newAccToken.body.access_token);
-    res.send(spotifyApi.getAccessToken());
-  }
-  catch (error){
-    res.status(400).send(error)
-  }
-})
 
 console.log('on port 3000')
 app.listen(3000)

@@ -29,7 +29,11 @@ module.exports = {
         target: 'http://localhost:3000',
         secure: true,
       },
-      '/search':{
+      '/search': {
+        target: 'http://localhost:3000',
+        secure: true
+      },
+      '/enqueue': {
         target: 'http://localhost:3000',
         secure: true
       }

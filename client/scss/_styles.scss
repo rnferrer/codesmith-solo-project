@@ -80,3 +80,14 @@ body{
     border-radius: 5px;
   }
 }
+
+#song-search-item-container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+}
+
+#song-item:hover{
+  cursor: pointer;
+}
