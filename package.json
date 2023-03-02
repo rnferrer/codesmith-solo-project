@@ -11,6 +11,7 @@
   "license": "ISC",
   "homepage": "https://github.com/rnferrer/codesmith-solo-project#readme",
   "dependencies": {
+    "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",

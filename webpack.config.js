@@ -24,7 +24,12 @@ module.exports = {
       '/callback': {
         target: 'http://localhost:3000',
         secure: true,
-      }
+      },
+      '/test': {
+        target: 'http://localhost:3000',
+        secure: true,
+      },
+
     }
   },
   module:{

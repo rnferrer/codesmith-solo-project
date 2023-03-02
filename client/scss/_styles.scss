@@ -35,3 +35,28 @@ body{
     }
   }
 }
+
+#button-container{
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  
+  #signout-button{
+    font-family: 'CircularSpotify';
+    margin-right: 2rem;
+    width: 100px;
+    height: 70%;
+    font-size: 1rem;
+    background-color: #5fcd5e;
+    border: none;
+    border-radius: 5px;
+  }
+}
+
+#center-display-container{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
