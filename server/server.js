@@ -9,6 +9,7 @@ const querystring = require('querystring');
 require('dotenv').config();
 
 app.use(cookieParser());
+app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -116,10 +117,11 @@ app.get('/test', (req, res)=>{
 })
 
 app.post('/search', async(req, res) => {
-  console.log(req.body.q)
+  // console.log(req.body.q)
   const tracks = await spotifyApi.searchTracks(req.body.q)
   console.log(tracks.body)
-  res.status(200).send()
+  //console.log(req.body)
+  res.status(200).json('hello')
 })
 
 app.get('/refresh', async (req, res) => {

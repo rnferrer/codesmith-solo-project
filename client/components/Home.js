@@ -1,5 +1,6 @@
 import React, {useState, useEffect}from "react";
 import Today from "./Date";
+import SearchBar from "./SearchBar";
 import SpotifyPlayer from 'react-spotify-web-playback';
 
 
@@ -24,7 +25,7 @@ const Home = () => {
       </div>
       <div id="center-display-container">
         <Today/>
-        
+        <SearchBar/>
         {/* <SpotifyPlayer token={token} song={song}/> */}
       </div>
     </div>

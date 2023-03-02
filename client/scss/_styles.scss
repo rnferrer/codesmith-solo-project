@@ -57,6 +57,26 @@ body{
 
 #center-display-container{
   display: flex;
+  flex-direction: column;
   width: 100%;
+  align-items: center;
   justify-content: center;
+}
+
+#searchbar-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#song-search{
+  width: 500px;
+  height: 40px;
+  #searchbar{
+    width: 100%;
+    height: 100%;
+    font-size: 1.1rem;
+    outline: none;
+    border-radius: 5px;
+  }
 }
