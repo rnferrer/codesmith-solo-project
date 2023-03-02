@@ -114,6 +114,7 @@ app.get('/home', async (req, res) => {
     const user = await spotifyApi.getMe();
 
     res.cookie('id', user.body.id)
+    res.cookie('display_name', user.body.display_name)
     res.cookie('token', spotifyApi.getAccessToken())
     res.redirect('http://localhost:8080')
   }

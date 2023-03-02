@@ -1,45 +1,35 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
+import Cookies from "js-cookie";
+
 
 const Today = () => {
 
-  const dateToString = (weekday, month, day, year) => {
-    let str = ''
-    switch (weekday){
-      case 0: str = str.concat('Sun '); break
-      case 1: str = str.concat('Mon '); break
-      case 2: str = str.concat('Tues '); break
-      case 3: str = str.concat('Wed '); break
-      case 4: str = str.concat('Thurs '); break
-      case 5: str = str.concat('Fri '); break
-      case 6: str = str.concat('Sat '); break
-    }
-    switch (month){
-      case 0: str = str.concat('January '); break
-      case 1: str = str.concat('February '); break
-      case 2: str = str.concat('March '); break
-      case 3: str = str.concat('April '); break
-      case 4: str = str.concat('May '); break
-      case 5: str = str.concat('June '); break
-      case 6: str = str.concat('July '); break
-      case 7: str = str.concat('August '); break
-      case 8: str = str.concat('September '); break
-      case 9: str = str.concat('October '); break
-      case 10: str = str.concat('November '); break
-      case 11: str = str.concat('December '); break
-    }
-    str = str.concat(`${day} ${year}`)
-    return str;
-  }
+  const locale = 'en';
+  const [today, setDate] = useState(new Date()); // Save the current date to be able to trigger an update
 
-  let today = new Date()
-  today = dateToString(today.getDay(), today.getMonth(), today.getDate(), today.getFullYear());
-  const [date, setDate] = useState(today);
+  useEffect(() => {
+      const timer = setInterval(() => { // Creates an interval which will update the current data every minute
+      // This will trigger a rerender every component that uses the useDate hook.
+      setDate(new Date());
+    }, 60 * 1000);
+    return () => {
+      clearInterval(timer); // Return a funtion to clear the timer so that it will stop being called on unmount
+    }
+  }, []);
 
-  return(
-    <div>
-      <h1>
-        {date}
-      </h1>
+  const name = Cookies.get('display_name').split(' ')[0]
+  const day = today.toLocaleDateString(locale, { weekday: 'long' });
+  const date = `${day}, ${today.getDate()} ${today.toLocaleDateString(locale, { month: 'long' })}\n\n`;
+  const hour = today.getHours();
+  const wish = `Good ${(hour < 12 && 'Morning') || (hour < 17 && 'Afternoon') || 'Evening'}, ${name}`;
+  const time = today.toLocaleTimeString(locale, { hour: 'numeric', hour12: true, minute: 'numeric' });
+
+  return (
+    <div id="today-container">
+      <h1>{date}</h1>
+      <h1>{time}</h1>
+      <h1>{wish}</h1>
+
     </div>
   )
 }

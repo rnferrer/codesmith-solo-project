@@ -48,7 +48,7 @@ const SearchBar = () => {
   return(
     <div id="searchbar-container">
       <form id="song-search" onSubmit={handleSubmit} >
-        <input type='text' onChange={handleChange} placeholder='Search up song to queue' id="searchbar" ></input>
+        <input type='text' onChange={handleChange} placeholder='Search up song to queue' id="searchbar" autoComplete="off"></input>
       </form>
       <div className="song-search-item-container">
         {songItems}
