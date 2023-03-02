@@ -108,7 +108,6 @@ app.get('/home', async(req,res) => {
 })
 
 app.get('/test', (req, res)=>{
-  //console.log(spotifyApi.getAccessToken())
   const resObj = {
     token: spotifyApi.getAccessToken(),
     song: '4iV5W9uYEdYUVa79Axb7Rh'
@@ -117,11 +116,15 @@ app.get('/test', (req, res)=>{
 })
 
 app.post('/search', async(req, res) => {
-  // console.log(req.body.q)
-  const tracks = await spotifyApi.searchTracks(req.body.q)
-  console.log(tracks.body)
-  //console.log(req.body)
-  res.status(200).json('hello')
+  const searched = await spotifyApi.searchTracks(req.body.q);
+  const tracks = await searched.body.tracks.items.slice(0,7)
+  const trackInfo = [];
+  for (let i=0; i<tracks.length; i++){
+    const {artists, href, id, name, uri} = tracks[i];
+    trackInfo.push({artists, href, id, name, uri})
+  }
+
+  res.status(200).json(trackInfo)
 })
 
 app.get('/refresh', async (req, res) => {

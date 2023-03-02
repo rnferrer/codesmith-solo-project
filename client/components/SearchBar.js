@@ -4,9 +4,15 @@ const SearchBar = () => {
 
   let song = ''
 
+  const [searchList, setSearchList] = useState([])
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(song)
+  }
+
+  const handleChange = async(event) =>{
+    event.preventDefault()
+    song = event.target.value
         
     const searchedSongs = await fetch('/search', {
       method: "post",
@@ -19,15 +25,11 @@ const SearchBar = () => {
       })
     })
     const data = await searchedSongs.json();
-    console.log(data)
+
+    setSearchList(data)
+
   }
 
-  const handleChange = async(event) =>{
-    event.preventDefault()
-    song = event.target.value
-
-    //console.log(song)
-  }
   return(
     <div id="searchbar-container">
       <h1>
