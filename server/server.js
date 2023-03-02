@@ -36,19 +36,39 @@ app.get('/', (req, res) => {
 
 app.get('/login', (req, res) => {
   //create a state key to prevent cross-site request forgery
-  console.log('hi')
   let state = generateRandomStr(16);
   res.cookie(stateKey, state);
-  //set scope to allow for reading user email, their library, and their state of playback
-  let scope = ['user-read-private', 'user-read-email', 'user-library-read', 'user-read-playback-state'];
+  //set scope to allow for access to all spotify actions
+  let scope = [
+    'ugc-image-upload',
+    'user-read-playback-state',
+    'user-modify-playback-state',
+    'user-read-currently-playing',
+    'playlist-read-private',
+    'playlist-read-collaborative',
+    'playlist-modify-private',
+    'playlist-modify-public',
+    'user-follow-modify',
+    'user-follow-read',
+    'user-read-playback-position',
+    'user-top-read',
+    'user-read-recently-played',
+    'user-library-read', 
+    'user-library-modify',
+    'user-read-private', 
+    'user-read-email', 
+  ];
   //creates an authorize url and redirects to it
-  res.redirect(spotifyApi.createAuthorizeURL(scope, state))
+  const url = spotifyApi.createAuthorizeURL(scope, state)
+  console.log('in login')
+  return res.redirect(url)
 })
 
 app.get('/callback', async (req,res) => {
   let code = req.query.code || null;
   let state = req.query.state || null;
   let storedState = req.cookies ? req.cookies[stateKey] : null;
+  console.log('in callback');
 
   if (state === null || state !== storedState) {
     res.status(400).send('error logging into Spotify')
@@ -59,13 +79,42 @@ app.get('/callback', async (req,res) => {
       const receivedTokens = await spotifyApi.authorizationCodeGrant(code);
       spotifyApi.setAccessToken(receivedTokens.body.access_token);
       spotifyApi.setRefreshToken(receivedTokens.body.refresh_token);
-      console.log(receivedTokens)
-      res.status(200).send(receivedTokens.body.refresh_token);
+      console.log(receivedTokens.body)
+      res.redirect('/home')
     }
     catch(error){
       res.status(400).send(error)
     }
   }
 })
+
+app.get('/home', async(req,res) => {
+  try{
+    console.log('spotifyApi')
+
+    const user = await spotifyApi.getMe();
+    const resUser = {
+      name: user.body.display_name,
+      id: user.body.id
+    }
+    res.locals.user = resUser;
+    res.cookie('id', user.body.id)
+    res.redirect('http://localhost:8080')
+  }
+  catch(error){
+    res.status(400).send(error);
+  }
+})
+
+app.get('/refresh', async (req, res) => {
+  try{
+    const newAccToken = await spotifyApi.refreshAccessToken()
+    spotifyApi.setAccessToken(newAccToken.body.access_token);
+  }
+  catch (error){
+    res.status(400).send(error)
+  }
+})
+
 console.log('on port 3000')
 app.listen(3000)

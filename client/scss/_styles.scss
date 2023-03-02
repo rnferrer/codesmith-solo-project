@@ -1,5 +1,5 @@
 body{
-  background-color: $darkGray;
+  background-image: linear-gradient(to right, $darkGray, rgb(12, 12, 12));
 }
 
 #login-container{
@@ -11,7 +11,27 @@ body{
   height: 80vh;
   #login-title{
     font-family: 'CircularSpotify';
-    font-size: 5rem;
+    font-size: 7rem;
     color: white;
+    animation: fadeIn 6s;
+    @keyframes fadeIn{
+      0% { opacity: 0;}
+      100% { opacity: 100;}
+    }
+  }
+  #login-button{
+    width: 200px;
+    height: 40px;
+    font-size: 1rem;
+    background-color: #5fcd5e;
+    border: none;
+    border-radius: 5px;
+  }
+  .login-atag{
+    text-decoration: none;
+    color: white;
+    :visited, :active{
+      text-decoration: none;
+    }
   }
 }

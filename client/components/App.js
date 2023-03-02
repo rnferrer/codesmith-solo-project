@@ -1,16 +1,20 @@
+
 import React from "react";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
+import Cookies from "js-cookie";
+
 import Login from "./Login.js";
+import Home from "./Home.js";
 
 const App = () => {
-
   return(
-    <Router>
-      <Routes>
-        <Route path="/" element={<Login/>}>
-        </Route>
-      </Routes>
-    </Router>
+    <div>
+      {Cookies.get('id')
+      ?<Home/>
+      :<Login/>
+
+      }
+    </div>
   )
 }
 
