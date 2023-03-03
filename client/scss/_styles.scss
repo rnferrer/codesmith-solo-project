@@ -1,5 +1,6 @@
 body{
-  background-image: linear-gradient(to right, $darkGray, rgb(12, 12, 12));
+  background-image: url('../assets/chill_background.gif');
+  margin: 0;
 }
 
 #login-container{
@@ -37,6 +38,8 @@ body{
 }
 
 #button-container{
+  position: absolute;
+  top: 0;
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
@@ -61,6 +64,7 @@ body{
   width: 100%;
   height: 100vh;
   align-items: center;
+
 }
 
 #searchbar-container{
@@ -72,6 +76,7 @@ body{
 #song-search{
   width: 500px;
   height: 40px;
+  margin-bottom: 0;
   #searchbar{
     width: 100%;
     height: 100%;
@@ -81,11 +86,26 @@ body{
   }
 }
 
-#song-search-item-container{
+.song-search-item-container{
   display: flex;
   flex-direction: column;
   width: 100%;
-
+  overflow-x: hidden;
+  background-color: #121212;
+  max-height: 400px;
+  p{
+    font-family: 'CircularSpotify';
+    margin: 10px 0 ;
+    margin-left: 10px;
+    color: white;
+  }
+  #song-item{
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    margin-left: 5px;
+  }
 }
 
 #song-item:hover{
@@ -96,9 +116,17 @@ body{
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 10rem;
   h1{
     color: white;
     font-family: 'CircularSpotify';
     margin: .5rem 0;
   }
+}
+
+#spotify-player-container{
+  width: 100%;
+  bottom: 0;
+  position: absolute;
+
 }

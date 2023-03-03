@@ -37,6 +37,7 @@ const SearchBar = () => {
           key={i}
           artist = {song.artists[0].name}
           song = {song.name}
+          image = {song.image}
           uri = {song.uri}
         />
       )

@@ -22,7 +22,9 @@ const Home = () => {
       <div id="center-display-container">
         <Today/>
         <SearchBar/>
-        <SpotifyPlayer token={token}/>
+        <div id="spotify-player-container">
+          <SpotifyPlayer token={token}/>
+        </div>
       </div>
     </div>
   )

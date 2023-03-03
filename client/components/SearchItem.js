@@ -1,6 +1,6 @@
 import React from "react";
 
-const SearchItem = ({artist, song, uri}) => {
+const SearchItem = ({artist, song, image, uri}) => {
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -17,7 +17,8 @@ const SearchItem = ({artist, song, uri}) => {
   }
   return(
     <div id="song-item" onClick={handleClick}>
-      <h2>{song} - {artist}</h2>
+      <img src={image.url}></img>
+      <p>{song} - {artist}</p>
     </div>
   )
 }

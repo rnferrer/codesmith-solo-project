@@ -151,13 +151,14 @@ app.post('/api/enqueue', async (req, res) => {
 app.post('/api/search', async(req, res) => {
   //search for inputted track and return first 7 results
   const searched = await spotifyApi.searchTracks(req.body.q);
-  const tracks = searched.body.tracks.items.slice(0,7)
+  const tracks = searched.body.tracks.items.slice(0,5)
   const trackInfo = [];
-
+  //console.log(tracks[0])
   //get only properties that we need
   for (let i=0; i<tracks.length; i++){
-    const {artists, href, id, name, uri} = tracks[i];
-    trackInfo.push({artists, href, id, name, uri})
+    const {artists, href, id, name, uri, album} = tracks[i];
+    let image = album.images[2]
+    trackInfo.push({artists, href, id, name, uri, image})
   }
 
   res.status(200).json(trackInfo)
