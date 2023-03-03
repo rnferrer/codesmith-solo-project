@@ -7,7 +7,7 @@ const Login = () => {
   return(
     <div>
       <div id="login-container">
-        <h1 id="login-title">Welcome to Spotifriends</h1>
+        <h1 id="login-title">Welcome to Studify</h1>
         <button id="login-button"><a href="/login" className="login-atag">Log in with Spotify</a></button>
       </div>
     </div>

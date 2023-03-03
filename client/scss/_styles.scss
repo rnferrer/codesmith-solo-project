@@ -1,6 +1,9 @@
 body{
-  background-image: url('../assets/chill_background.gif');
+  background: linear-gradient(214deg, rgba(18,18,18,1) 0%, rgba(52,52,52,1) 100%);
   margin: 0;
+}
+#home-container{
+  background-image: url('../assets/chill_background.gif');
 }
 
 #login-container{

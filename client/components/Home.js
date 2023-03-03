@@ -15,7 +15,7 @@ const Home = () => {
     setToken(Cookies.get('token'))
   })
   return(
-    <div>
+    <div id="home-container">
       <div id="button-container">
         <button id="signout-button">Sign out</button>
       </div>
@@ -23,7 +23,7 @@ const Home = () => {
         <Today/>
         <SearchBar/>
         <div id="spotify-player-container">
-          <SpotifyPlayer token={token}/>
+          <SpotifyPlayer token={token} styles={{bgColor: '#051016', color: '#fff', trackArtistColor: '#fff', trackNameColor: '#fff'}}/>
         </div>
       </div>
     </div>
